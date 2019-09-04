@@ -1,11 +1,6 @@
 def show_multiplicative_average(array)
-  # multiply all numbers together
-  product = array.inject(&:*)
-  # divide result by number of array entries
-  product = product / array.size.to_f
-  puts product
-  # print result to 3 decimal places
-
+  average = array.inject(&:*) / array.size.to_f
+  puts format('%.3f', average)
 end
 
 show_multiplicative_average([3, 5])
