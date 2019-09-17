@@ -6,7 +6,7 @@ end
 
 def rotate_rightmost_digits(int, left)
   input = int.to_s.chars
-  (input[0...-left] + rotate_array(input[-left..-1])).join.to_i
+  (input[0...-left] + rotate_array(input[-left..-1])).join#.to_i
 
 end
 
@@ -17,10 +17,11 @@ def max_rotation(number)
     result = rotate_rightmost_digits(result, counter)
     counter -= 1
   end
-  result
+  # result
+  result.to_i
 end
 
-# p max_rotation(10035) #== 3150
+p max_rotation(10035) #== 3150
 p max_rotation(735291) #== 321579
 p max_rotation(3) == 3
 p max_rotation(35) == 53
