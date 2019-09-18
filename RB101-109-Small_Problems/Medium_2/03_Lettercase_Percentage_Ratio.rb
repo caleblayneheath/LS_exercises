@@ -1,5 +1,16 @@
 def letter_percentages(string)
+  result = {}
+  size = string.chars.size
+  lowcase_count = string.count('a-z')
+  result[:lowercase] = to_percentage(lowcase_count, size)
+  upcase_count = string.count('A-Z')
+  result[:uppercase] = to_percentage(upcase_count, size)
+  result[:neither] = to_percentage(size - upcase_count - lowcase_count, size)
+  result
+end
 
+def to_percentage(numerator, denominator)
+  ((numerator.to_f / denominator.to_f) * 100)
 end
 
 
