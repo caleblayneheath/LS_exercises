@@ -309,11 +309,56 @@ p multiply_all_pairs([2, 4], [4, 3, 1, 2]) == [2, 4, 4, 6, 8, 8, 12, 16]
 input: string of at least two words, words are any sequence of nonblanks
 output: next to last word in input string
 
+=begin
+input: array of numbers, always at least 1
+output: sum of the sums of each leading subsequence for that array
 
-split string by whitespace(default)
-return arr[-2]
+initialize total of 0
+get range of 0...arr.size
+  for each num in range add sum of arr[0..num] to toal
+  
+return total
 
 =end
+
+def sum_of_sums(arr)
+  total = 0
+  (0...arr.size).each do |idx|
+    total += arr[0..idx].sum
+  end
+  total
+  
+end
+
+p sum_of_sums([3, 5, 2]) == (3) + (3 + 5) + (3 + 5 + 2) # -> (21)
+p sum_of_sums([1, 5, 7, 3]) == (1) + (1 + 5) + (1 + 5 + 7) + (1 + 5 + 7 + 3) # -> (36)
+p sum_of_sums([4]) == 4
+p sum_of_sums([1, 2, 3, 4, 5]) == 35
+
+=begin
+input: string
+output: each subsequent substring, starting from beginning char
+
+create empty results array
+get range of 0...str.size
+iterate through range
+  append array the substring 0..num
+results
+=end
+
+def substrings_at_start(str)
+  results = []
+  (0...str.size).each do |idx|
+    results << str[0..idx]
+  end
+  results
+end
+
+p substrings_at_start('abc') == ['a', 'ab', 'abc']
+p substrings_at_start('a') == ['a']
+p substrings_at_start('xyzzy') == ['x', 'xy', 'xyz', 'xyzz', 'xyzzy']
+
+
 
 def penultimate(str)
   str.split[-2]  
@@ -321,3 +366,54 @@ end
 
 p penultimate('last word') == 'last'
 p penultimate('Launch School is great!') == 'is'
+
+
+=begin
+input: string
+output: each subsequent substring, starting from beginning char
+
+create empty results array
+get range of 0...str.size
+iterate through range
+  append array the substring 0..num
+results
+=end
+
+def substrings_at_start(str)
+  results = []
+  (0...str.size).each do |idx|
+    results << str[0..idx]
+  end
+  results
+end
+
+=begin
+input: string
+output: all substrings, arranged in order of occurance of first char, then length
+
+create empty results array
+get range 0...str.size
+iterate through range of primary str
+  append to array the substring (num...str.size)
+  
+return results flatten
+
+=end
+
+def substrings(str)
+  results = []
+  (0...str.size).each do |idx|
+    results << substrings_at_start(str[idx...str.size])
+  end
+  results.flatten
+end
+
+p substrings('abcde') == [
+  'a', 'ab', 'abc', 'abcd', 'abcde', 
+  'b', 'bc', 'bcd', 'bcde',
+  'c', 'cd', 'cde',
+  'd', 'de',
+  'e'
+]
+
+
