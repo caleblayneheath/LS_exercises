@@ -115,3 +115,209 @@ end
 
 p swapcase('CamelCase') == 'cAMELcASE'
 p swapcase('Tonight on XYZ-TV') == 'tONIGHT ON xyz-tv'
+
+=begin
+input: a string
+output: a new string transformed according to following rules
+-every other character is capitalized
+  - every odd position, or even index is capitalized
+-other chars are downcased
+  -every even position, or odd index is downcased
+-nonletter chars shouldno't be changed but do count for positioning
+
+
+create empty result string
+get range of indices by 0...input.size
+for each num in indices
+  access input[index]
+  if index.even?
+    result << input[index].upcase
+  else
+    result << input[index].downcase
+    
+return result str
+=end
+
+def staggered_case(str)
+  result = ''
+  (0...str.size).each do |idx|
+    word = idx.even? ? str[idx].upcase : str[idx].downcase
+    result << word
+  end
+  result
+  
+end
+
+p staggered_case('I Love Launch School!') == 'I LoVe lAuNcH ScHoOl!'
+p staggered_case('ALL_CAPS') == 'AlL_CaPs'
+p staggered_case('ignore 77 the 444 numbers') == 'IgNoRe 77 ThE 444 NuMbErS'
+
+=begin
+input: a string
+output: a new string transformed according to following rules
+-every other character is capitalized
+-other chars are downcased
+-nonletter chars shouldno't be changed but don't count for positioning
+
+-first letter char is capitalized
+
+
+create empty result string
+initialize flag of upcase as true
+
+iterate over ever char in str
+for each char in str, ask...
+  is this a letter? (see if downcase char in range of 'a'..'z'
+    yes
+      upcase or downcase letter as appropriate
+        if upcase true, upcase,
+        else downcase
+      store information to determine case of next letter
+        switch from upcase to downcase, or vice versa
+      append to result str
+    no
+      append to result str
+return result str
+
+
+
+=end
+
+
+
+def staggered_case(str)
+  result = ''
+  upcase = true
+  
+  str.chars.each do |char|
+    if ('a'..'z').include?(char.downcase)
+      char = upcase ? char.upcase : char.downcase
+      upcase = upcase ? false : true
+    end
+    result << char
+  end
+  result
+  
+end
+
+p staggered_case('I Love Launch School!') == 'I lOvE lAuNcH sChOoL!'
+p staggered_case('ALL CAPS') == 'AlL cApS'
+p staggered_case('ignore 77 the 444 numbers') == 'IgNoRe 77 ThE 444 nUmBeRs'
+
+
+=begin
+input: array of ints, non empty
+output: printout of multiplicative average, rounded to 3 decimals
+  multiply all elements of array together / number of elements in array
+
+
+use reduce to get product of all elements
+divide product by arr.size
+
+print value.round(3)
+
+=end
+
+def show_multiplicative_average(arr)
+  result = (arr.reduce(:*) / arr.size.to_f ).round(3).to_s
+  
+  puts pad_to_three(result)
+  
+  
+end
+
+=begin
+input: string of float number 4.6 rounded to 3 dec imal places
+output: new string wtih zeros appended until 3 decimal places all filled
+
+split str by '.' and store in val
+see if last val in arr has size 3
+  if yes, do nothing and break from loop
+  if no, append a zero and continue
+return arr joinined by '.'
+
+=end
+
+def pad_to_three(str)
+  arr = str.split('.')
+  loop do
+    arr.last.size >= 3 ? break : arr[-1] << '0'
+  end
+  arr.join('.')
+end
+
+show_multiplicative_average([3, 5])
+# The result is 7.500
+
+show_multiplicative_average([6])
+# The result is 6.000
+
+show_multiplicative_average([2, 5, 7, 11, 13, 17])
+# The result is 28361.667
+
+
+=begin
+input: two equal sized nonempty arrays of numbers
+output: single array containing products of corresponding elements of input arrays, arr1.first * arr2.first
+
+create empty results array
+get range of one array
+iterate throguh range
+  access values at corre indices using range
+  mulitply values and append to results array
+return results array
+
+=end
+
+def multiply_list(arr1, arr2)
+  results = []
+  (0...arr1.size).each do |idx|
+    results << arr1[idx] * arr2[idx]
+  end
+  results
+end
+
+p multiply_list([3, 5, 7], [9, 10, 11]) == [27, 50, 77]
+
+
+=begin
+input: two arrays of nums, neither empty
+output: array with every possible combination of multiplications between two arrays, sorted by increasing value
+
+create empty results array
+iterate through all elements of first array
+  access every value within second array
+  for each val in second array, multiply by current element of first array
+  append to results
+return sorted results
+
+=end
+
+def multiply_all_pairs(arr1, arr2)
+  results = []
+  arr1.each do |num1|
+    arr2.each do |num2|
+      results << num1 * num2
+    end
+  end
+  results.sort
+end
+
+p multiply_all_pairs([2, 4], [4, 3, 1, 2]) == [2, 4, 4, 6, 8, 8, 12, 16]
+
+=begin
+input: string of at least two words, words are any sequence of nonblanks
+output: next to last word in input string
+
+
+split string by whitespace(default)
+return arr[-2]
+
+=end
+
+def penultimate(str)
+  str.split[-2]  
+end
+
+p penultimate('last word') == 'last'
+p penultimate('Launch School is great!') == 'is'
