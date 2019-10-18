@@ -231,3 +231,183 @@ p triangle(0, 90, 90) == :invalid
 p triangle(50, 50, 50) == :invalid
 
 
+=begin
+input: integer
+output: next featured number
+OR
+an error if there is none
+
+featured number is an 
+-odd number
+-multiple of 7
+-only one instance of any given digit occurs
+  turn num to string
+  split string into chars
+  get uniq value of chars array
+  if size difference between uniq and original char array, false
+  
+no featured number could be greater than 9_876_543_210
+
+
+start at input+1, then check that number and every number up to the featured number limit
+  return the first number that triggers true for all favored number args
+  
+else return false
+
+=end
+
+def featured(num)
+  return 'error' if num > 9_876_543_210
+  
+  range = (num+1)..9_876_543_210
+  range.each do |int|
+    return int if featured_num?(int)
+  end
+  'error num too large'
+end
+
+def featured_num?(num)
+  num.odd? && (num % 7 == 0) && uniq_digits?(num)
+end
+
+def uniq_digits?(num)
+  arr = num.to_s.chars
+  arr.size == arr.uniq.size
+end
+
+
+p featured(12) == 21
+p featured(20) == 21
+p featured(21) == 35
+# p featured(997) == 1029
+# p featured(1029) == 1043
+# p featured(999_999) == 1_023_547
+# p featured(999_999_987) == 1_023_456_987
+
+# p featured(9_999_999_999) # -> There is no possible number that fulfills those requirements
+
+
+=begin
+input: an array of at least two elements to be sorted
+output: the mutated sorted array
+
+bubble sort
+
+create swap flag, set to false
+loop through array making comparisons
+(range of left indices is 0..-2 (size of arr -2),  last comparison is -2 to -1)
+in range of 0..(arr.size-2)
+  compare arr[num] to arr[num+1}
+
+  compare left to right
+    if left > right, swap positions (can use e1, e2 = e2, e1)
+      and set swap flag to true
+  break loop if swap is false
+  
+=end
+
+def bubble_sort!(arr)
+  indices = 0..(arr.size-2)
+  loop do
+    swap = false
+    indices.each do |idx|
+      if arr[idx] > arr[idx+1]
+        arr[idx], arr[idx+1] = arr[idx+1], arr[idx]
+        swap = true
+      end
+    end
+    break unless swap
+  end
+end
+
+array = [5, 3]
+bubble_sort!(array)
+p array == [3, 5]
+
+array = [6, 2, 7, 1, 4]
+bubble_sort!(array)
+p array == [1, 2, 4, 6, 7]
+
+array = %w(Sue Pete Alice Tyler Rachel Kim Bonnie)
+bubble_sort!(array)
+p array == %w(Alice Bonnie Kim Pete Rachel Sue Tyler)
+
+=begin
+input: num
+output:
+
+for range 1..input
+(sum of range)^2 - (range^2)summmed
+
+=end
+
+def sum_square_difference(num)
+  ((1..num).sum**2) - (1..num).map{|i|i**2}.sum
+end
+
+p sum_square_difference(3) == 22
+   # -> (1 + 2 + 3)**2 - (1**2 + 2**2 + 3**2)
+p sum_square_difference(10) == 2640
+p sum_square_difference(1) == 0
+p sum_square_difference(100) == 25164150
+
+
+=begin
+input: float representing an angle in degrees
+output: string representation angle in degrees, minutes, seconds format
+
+360 degrees in a circle
+1 degree = 60 mins
+1 min = 60 sec
+
+get degrees
+  justify everything to 360, range is 0 to 359
+  (angle % 360)
+  deg = angle / angle.to_i
+get minutes
+  convert degree remainder into minutes
+  multiply deg_rem * 60 to get minutes
+
+get seconds
+  multiply min_remain *60
+
+format degrees, min, sec
+
+
+divmod results
+[divident, remainder]
+
+=end
+
+DEGREE = "\xC2\xB0"
+def dms(angle)
+  angle = angle % 360
+  degree, degree_remainder = angle.divmod(1)
+  
+  minute = (degree_remainder * 60).round(2) # may have to round more or less
+  minute, minute_remainder = minute.divmod(1)
+  
+  second = (minute_remainder * 60).round
+  
+  
+  "#{degree}#{DEGREE}#{pad_num(minute)}'#{pad_num(second)}\""
+end
+
+=begin
+take num, turn to string
+if str size == 1
+return '0'+num_str
+=end
+
+def pad_num(num)
+  num_str = num.to_s
+  num_str.size == 1 ? ('0' + num_str) : num_str
+end
+
+puts dms(30) #== %(30°00'00")
+puts dms(76.73) #== %(76°43'48")
+puts dms(254.6) #== %(254°36'00")
+puts dms(93.034773) #== %(93°02'05")
+puts dms(0) #== %(0°00'00")
+puts dms(360) #== %(360°00'00") || dms(360) == %(0°00'00")
+
