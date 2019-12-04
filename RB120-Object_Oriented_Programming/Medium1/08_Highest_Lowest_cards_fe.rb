@@ -18,52 +18,51 @@ class Card
   private 
 
   def <=>(other_card)
-    # priority <=> other_card.priority
-    value <=> other_card.value
+    if rank_value == other_card.rank_value
+      suit_value <=> other_card.suit_value
+    else
+      rank_value <=> other_card.rank_value
+    end
   end
 
   protected
 
-  def value
+  def rank_value
     RANK_VALUES.fetch(rank, rank) # second is default if not found in hash
   end
 
-  # def priority
-  #   case rank
-  #   when 2..10 then rank
-  #   when 'Jack' then 11
-  #   when 'Queen' then 12
-  #   when 'King' then 13
-  #   when 'Ace' then 14
-  #   end
-  # end
+  def suit_value
+    SUIT_VALUES.fetch(suit)
+  end
+
 end
 
 cards = [Card.new(2, 'Hearts'),
-  Card.new(10, 'Diamonds'),
-  Card.new('Ace', 'Clubs')]
-puts cards
-puts cards.min == Card.new(2, 'Hearts')
-puts cards.max == Card.new('Ace', 'Clubs')
+  Card.new(2, 'Diamonds'),
+  Card.new(2, 'Clubs'),
+  Card.new(2, 'Spades')]
+puts cards.sort
+puts cards.min == Card.new(2, 'Diamonds')
+puts cards.max == Card.new(2, 'Spades')
 
-cards = [Card.new(5, 'Hearts')]
-puts cards.min == Card.new(5, 'Hearts')
-puts cards.max == Card.new(5, 'Hearts')
+# cards = [Card.new(5, 'Hearts')]
+# puts cards.min == Card.new(5, 'Hearts')
+# puts cards.max == Card.new(5, 'Hearts')
 
-cards = [Card.new(4, 'Hearts'),
-  Card.new(4, 'Diamonds'),
-  Card.new(10, 'Clubs')]
-puts cards.min.rank == 4
-puts cards.max == Card.new(10, 'Clubs')
+# cards = [Card.new(4, 'Hearts'),
+#   Card.new(4, 'Diamonds'),
+#   Card.new(10, 'Clubs')]
+# puts cards.min.rank == 4
+# puts cards.max == Card.new(10, 'Clubs')
 
-cards = [Card.new(7, 'Diamonds'),
-  Card.new('Jack', 'Diamonds'),
-  Card.new('Jack', 'Spades')]
-puts cards.min == Card.new(7, 'Diamonds')
-puts cards.max.rank == 'Jack'
+# cards = [Card.new(7, 'Diamonds'),
+#   Card.new('Jack', 'Diamonds'),
+#   Card.new('Jack', 'Spades')]
+# puts cards.min == Card.new(7, 'Diamonds')
+# puts cards.max.rank == 'Jack'
 
-cards = [Card.new(8, 'Diamonds'),
-  Card.new(8, 'Clubs'),
-  Card.new(8, 'Spades')]
-puts cards.min.rank == 8
-puts cards.max.rank == 8
+# cards = [Card.new(8, 'Diamonds'),
+#   Card.new(8, 'Clubs'),
+#   Card.new(8, 'Spades')]
+# puts cards.min.rank == 8
+# puts cards.max.rank == 8
