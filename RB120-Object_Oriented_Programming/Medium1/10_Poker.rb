@@ -9,7 +9,7 @@ class PokerHand
   end
 
   def print
-    hand.each { |card| puts card }
+    puts hand
   end
 
   def evaluate
@@ -42,7 +42,7 @@ class PokerHand
   end
 
   def royal_flush?
-    straight_flush? && ranks == [10, 'Jack', 'Queen', 'King', 'Ace']
+    straight_flush? && ranks.first == 10
   end
 
   def straight_flush?
@@ -50,7 +50,7 @@ class PokerHand
   end
 
   def four_of_a_kind?
-    count_of_group_size?(size_of_group: 4, count_of_groups: 1)
+    count_of_group_size?(group_size: 4, group_count: 1)
   end
 
   def full_house?
@@ -61,25 +61,25 @@ class PokerHand
     suits.uniq.size == 1
   end
 
-  # handle ace lows somehow?
   def straight?
+    return true if ranks == [2, 3, 4, 5, 'Ace'] # for ace lows
     rank_values == (rank_values.min..rank_values.max).to_a 
   end
 
   def three_of_a_kind?
-    count_of_group_size?(size_of_group: 3, count_of_groups: 1)
+    count_of_group_size?(group_size: 3, group_count: 1)
   end
 
   def two_pair?
-    count_of_group_size?(size_of_group: 2, count_of_groups: 2)
+    count_of_group_size?(group_size: 2, group_count: 2)
   end
 
   def pair?
-    count_of_group_size?(size_of_group: 2, count_of_groups: 1)
+    count_of_group_size?(group_size: 2, group_count: 1)
   end
 
-  def count_of_group_size?(size_of_group: nil, count_of_groups: nil)
-    ranks.uniq.select { |card| ranks.count(card) == size_of_group }.size == count_of_groups
+  def count_of_group_size?(group_size: nil, group_count: nil)
+    ranks.uniq.select { |card| ranks.count(card) == group_size }.size == group_count
   end
 end
 
@@ -267,3 +267,12 @@ hand = PokerHand.new([
   Card.new(3,      'Diamonds')
 ])
 puts hand.evaluate == 'High card'
+
+hand = PokerHand.new([
+  Card.new(5, 'Clubs'),
+  Card.new(4,  'Diamonds'),
+  Card.new(3,      'Clubs'),
+  Card.new('Ace',   'Hearts'),
+  Card.new(2,  'Clubs')
+])
+puts hand.evaluate == 'Straight'
