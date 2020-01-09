@@ -1,4 +1,5 @@
-# The code below raises an exception. Examine the error message and alter the code so that it runs without error.
+# The code below raises an exception. Examine the error message and alter the code so that 
+# it runs without error.
 
 class Animal
   def initialize(diet, superpower)
@@ -36,7 +37,7 @@ end
 
 class SongBird < Bird
   def initialize(diet, superpower, song)
-    super
+    super(diet, superpower)
     @song = song
   end
 

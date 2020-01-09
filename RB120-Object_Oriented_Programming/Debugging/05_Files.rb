@@ -1,7 +1,8 @@
-# You started writing a very basic class for handling files. However, when you begin to write some simple test code, you get a NameError. The error message complains of an uninitialized constant File::FORMAT.
+# You started writing a very basic class for handling files. 
+# However, when you begin to write some simple test code, you get a NameError. 
+# The error message complains of an uninitialized constant File::FORMAT.
+# What is the problem and what are possible ways to fix it?
 
-#   What is the problem and what are possible ways to fix it?
-  
   class File
     attr_accessor :name, :byte_content
   
@@ -20,7 +21,7 @@
     end
   
     def to_s
-      "#{name}.#{FORMAT}"
+      "#{name}.#{self.class::FORMAT}"
     end
   end
   

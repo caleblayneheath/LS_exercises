@@ -1,6 +1,12 @@
-# When attempting to sort an array of various lengths, we are surprised to see that an ArgumentError is raised. Make the necessary changes to our code so that the various lengths can be properly sorted and line 62 produces the expected output.
+# When attempting to sort an array of various lengths, 
+# we are surprised to see that an ArgumentError is raised. 
+
+# Make the necessary changes to our code so that the various 
+# lengths can be properly sorted and line 62 produces the expected output.
 
 class Length
+  include Comparable
+  
   attr_reader :value, :unit
 
   def initialize(value, unit)
@@ -20,33 +26,41 @@ class Length
     convert_to(:nmi, { km: 1.8519993, mi: 1.15078, nmi: 1 })
   end
 
-  def ==(other)
+  def <=>(other)
     case unit
-    when :km  then value == other.as_kilometers.value
-    when :mi  then value == other.as_miles.value
-    when :nmi then value == other.as_nautical_miles.value
+    when :km  then value <=> other.as_kilometers.value
+    when :mi  then value <=> other.as_miles.value
+    when :nmi then value <=> other.as_nautical_miles.value
     end
   end
 
-  def <(other)
-    case unit
-    when :km  then value < other.as_kilometers.value
-    when :mi  then value < other.as_miles.value
-    when :nmi then value < other.as_nautical_miles.value
-    end
-  end
+  # def ==(other)
+  #   case unit
+  #   when :km  then value == other.as_kilometers.value
+  #   when :mi  then value == other.as_miles.value
+  #   when :nmi then value == other.as_nautical_miles.value
+  #   end
+  # end
 
-  def <=(other)
-    self < other || self == other
-  end
+  # def <(other)
+  #   case unit
+  #   when :km  then value < other.as_kilometers.value
+  #   when :mi  then value < other.as_miles.value
+  #   when :nmi then value < other.as_nautical_miles.value
+  #   end
+  # end
 
-  def >(other)
-    !(self <= other)
-  end
+  # def <=(other)
+  #   self < other || self == other
+  # end
 
-  def >=(other)
-    self > other || self == other
-  end
+  # def >(other)
+  #   !(self <= other)
+  # end
+
+  # def >=(other)
+  #   self > other || self == other
+  # end
 
   def to_s
     "#{value} #{unit}"

@@ -1,4 +1,5 @@
-# On lines 37 and 38 of our code, we can see that grace and ada are located at the same coordinates. So why does line 39 output false? Fix the code to produce the expected output.
+# On lines 37 and 38 of our code, we can see that grace and ada are located at the same coordinates.
+# So why does line 39 output false? Fix the code to produce the expected output.
 
 class Person
   attr_reader :name
@@ -23,6 +24,10 @@ class GeoLocation
 
   def to_s
     "(#{latitude}, #{longitude})"
+  end
+
+  def ==(other)
+    (latitude == other.latitude) && (longitude == other.longitude)
   end
 end
 

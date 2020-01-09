@@ -1,4 +1,7 @@
-# We have written some code for a simple employee management system. Each employee must have a unique serial number. However, when we are testing our program, an exception is raised. Fix the code so that the program works as expected without error.
+# We have written some code for a simple employee management system. 
+# Each employee must have a unique serial number. However, when we are 
+# testing our program, an exception is raised. Fix the code so that the 
+# program works as expected without error.
 
 class EmployeeManagementSystem
   attr_reader :employer
@@ -65,11 +68,13 @@ class Employee
 
   private
 
-  attr_reader :serial_number
-
   def abbreviated_serial_number
     serial_number[-4..-1]
   end
+
+  protected
+  
+  attr_reader :serial_number
 end
 
 # Example
