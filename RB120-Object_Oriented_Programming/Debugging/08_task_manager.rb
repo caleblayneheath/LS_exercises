@@ -1,4 +1,5 @@
-# Valentina is using a new task manager program she wrote. When interacting with her task manager, an error is raised that surprises her. Can you find the bug and fix it?
+# Valentina is using a new task manager program she wrote. When interacting 
+# with her task manager, an error is raised that surprises her. Can you find the bug and fix it?
 
 class TaskManager
   attr_reader :owner
@@ -34,11 +35,7 @@ class TaskManager
   end
 
   def display_high_priority_tasks
-    tasks = tasks.select do |task|
-      task.priority == :high
-    end
-
-    display(tasks)
+    display(tasks.select {|task| task.priority == :high})
   end
 
   private

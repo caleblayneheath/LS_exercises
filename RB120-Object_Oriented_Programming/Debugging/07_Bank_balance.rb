@@ -1,4 +1,10 @@
-# We created a simple BankAccount class with overdraft protection, that does not allow a withdrawal greater than the amount of the current balance. We wrote some example code to test our program. However, we are surprised by what we see when we test its behavior. Why are we seeing this unexpected output? Make changes to the code so that we see the appropriate behavior.
+# We created a simple BankAccount class with overdraft protection, 
+# that does not allow a withdrawal greater than the amount of the current balance. 
+# We wrote some example code to test our program. However, we are surprised by what 
+# we see when we test its behavior. Why are we seeing this unexpected output? Make 
+# changes to the code so that we see the appropriate behavior.
+
+require 'pry-byebug'
 
 class BankAccount
   attr_reader :balance
@@ -19,13 +25,14 @@ class BankAccount
   end
 
   def withdraw(amount)
-    if amount > 0
-      success = (self.balance -= amount)
-    else
-      success = false
-    end
+    # binding.pry
+    # success = if amount > 0
+    #   (self.balance -= amount) >= 0
+    # else
+    #   false
+    # end
 
-    if success
+    if amount > 0 && valid_transaction?(balance - amount)
       "$#{amount} withdrawn. Total balance is $#{balance}."
     else
       "Invalid. Enter positive amount less than or equal to current balance ($#{balance})."
@@ -33,12 +40,12 @@ class BankAccount
   end
 
   def balance=(new_balance)
-    if valid_transaction?(new_balance)
+    # if valid_transaction?(new_balance)
       @balance = new_balance
-      true
-    else
-      false
-    end
+    #   true
+    # else
+    #   false
+    # end
   end
 
   def valid_transaction?(new_balance)
