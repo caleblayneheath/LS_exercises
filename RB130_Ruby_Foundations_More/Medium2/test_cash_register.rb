@@ -2,6 +2,9 @@ require 'minitest/autorun'
 require 'minitest/reporters'
 Minitest::Reporters.use!
 
+require 'simplecov'
+SimpleCov.start
+
 require_relative 'cash_register.rb'
 require_relative 'transaction.rb'
 
