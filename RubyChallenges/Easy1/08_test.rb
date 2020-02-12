@@ -1,6 +1,7 @@
 require 'minitest/autorun'
+require 'minitest/reporters'
 require_relative '08_word_count'
-
+Minitest::Reporters.use!
 # Test data version:
 
 class PhraseTest < Minitest::Test
@@ -65,7 +66,6 @@ class PhraseTest < Minitest::Test
     assert_equal counts, phrase.word_count
   end
 
-
   def test_with_apostrophes
     phrase = Phrase.new("First: don't laugh. Then: don't cry.")
     counts = {
@@ -80,6 +80,14 @@ class PhraseTest < Minitest::Test
     counts = {
       'joe' => 1, "can't" => 1, 'tell' => 1,
       'between' => 1, 'large' => 2, 'and' => 1
+    }
+    assert_equal counts, phrase.word_count
+  end
+
+  def test_ending_apostrophe
+    phrase = Phrase.new("Louis' classroom")
+    counts = {
+      "louis'" => 1, "classroom" => 1
     }
     assert_equal counts, phrase.word_count
   end
