@@ -14,23 +14,23 @@ class BeerSong
     elsif number == 0
       REPRISE_VERSE
     else
-      BEER_VERSE.gsub('START_BOTTLES', bottle_phrase(number) )
-                .gsub('END_BOTTLES', bottle_phrase(number - 1))
+      base_verse(number)
     end
   end
 
   def verses(start_verse, end_verse)
-    result = []
-    (end_verse..start_verse).reverse_each do |number|
-      result << verse(number)
-    end
-    result.join("\n")
+    (end_verse..start_verse).map do |number| 
+      verse(number)
+    end.reverse.join("\n")
+  end
+
+  def base_verse(number)
+    BEER_VERSE.gsub('START_BOTTLES', bottle_phrase(number))
+              .gsub('END_BOTTLES', bottle_phrase(number - 1))
   end
 
   def bottle_phrase(number)
-    str = "#{number} bottle"
-    str << 's' if number > 1
-    str
+    str = "#{number} bottle#{'s' if number > 1}"
   end
 
   def lyrics

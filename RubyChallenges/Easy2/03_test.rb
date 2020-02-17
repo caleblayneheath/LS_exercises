@@ -1,5 +1,5 @@
 require 'minitest/autorun'
-require_relative '03_beer_song'
+require_relative '03_beer_song_bonus'
 
 # rubocop:disable Metrics/LineLength
 class BeerSongTest < Minitest::Test
