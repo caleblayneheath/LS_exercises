@@ -8,7 +8,8 @@ day_of_week
 :monday, etc.
 
 days of month
-:first, :second, :third, :fourth => correspond to xth occurance of day that month
+:first, :second, :third, :fourth =>
+correspond to xth occurance of day that month
 :last is last occurance of that month (how to determine?)
 :teenth is 13 through 19, one of these will each fall on diff weekday
 
@@ -33,43 +34,47 @@ else increment 7 days
 =end
 
 class Meetup
+  ORDER = %i[first second third fourth].freeze
+
   def initialize(month, year)
-    @date = Date.new(year, month)
+    @month = month
+    @year = year
   end
 
   def day(weekday, schedule)
-    meeting_day = @date
-    
-    # create method to test for first x-day
-    test_day = (weekday.to_s + '?').to_sym
-    
-    # find first x-day of month
-    loop do
-      if meeting_day.method(test_day).call
-        break
-      else
-        meeting_day = meeting_day.next
-      end
-    end
-    
+    possible_dates = get_all_xdays(weekday)
+    select_from_possible_dates(possible_dates, schedule)
+  end
+
+  private
+
+  def get_first_xday(weekday)
+    test_day = (weekday.to_s + '?')
+    dates = Date.new(@year, @month)..Date.new(@year, @month, 7)
+    dates.find { |date| date.public_send(test_day) }
+  end
+
+  def get_all_xdays(weekday)
+    meeting_day = get_first_xday(weekday)
+
     possible_dates = []
     loop do
       possible_dates << meeting_day
-      meeting_day = meeting_day + 7
-      break if meeting_day.month != @date.month
+      meeting_day += 7
+      break if meeting_day.month != @month
     end
-    
-    
-    meeting_day = case schedule
-    when :first then possible_dates[0]
-    when :second then possible_dates[1]
-    when :third then possible_dates[2]
-    when :fourth then possible_dates[3]
-    when :last then possible_dates[-1]
-    when :teenth 
-      possible_dates.select { |choice| (13..19).include?(choice.day) }.first
-    end
+    possible_dates
+  end
 
-    meeting_day
+  def select_from_possible_dates(possible_dates, schedule)
+    case schedule
+    when :last then possible_dates[-1]
+    when :teenth then determine_teenth(possible_dates)
+    else possible_dates[ORDER.index(schedule)]
+    end
+  end
+
+  def determine_teenth(possible_dates)
+    possible_dates.find { |choice| (13..19).cover?(choice.day) }
   end
 end
