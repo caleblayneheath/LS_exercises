@@ -33,48 +33,71 @@ if yes, return date object
 else increment 7 days
 =end
 
+# my solution
+# class Meetup
+#   ORDER = %i[first second third fourth].freeze
+
+#   def initialize(month, year)
+#     @month = month
+#     @year = year
+#   end
+
+#   def day(weekday, schedule)
+#     possible_dates = get_all_xdays(weekday)
+#     select_from_possible_dates(possible_dates, schedule)
+#   end
+
+#   private
+
+#   def get_first_xday(weekday)
+#     test_day = (weekday.to_s + '?')
+#     dates = Date.new(@year, @month)..Date.new(@year, @month, 7)
+#     dates.find { |date| date.public_send(test_day) }
+#   end
+
+#   def get_all_xdays(weekday)
+#     meeting_day = get_first_xday(weekday)
+
+#     possible_dates = []
+#     loop do
+#       possible_dates << meeting_day
+#       meeting_day += 7
+#       break if meeting_day.month != @month
+#     end
+#     possible_dates
+#   end
+
+#   def select_from_possible_dates(possible_dates, schedule)
+#     case schedule
+#     when :last then possible_dates[-1]
+#     when :teenth then determine_teenth(possible_dates)
+#     else possible_dates[ORDER.index(schedule)]
+#     end
+#   end
+
+#   def determine_teenth(possible_dates)
+#     possible_dates.find { |choice| (13..19).cover?(choice.day) }
+#   end
+# end
+
+# blind reattempt having read solutions
 class Meetup
-  ORDER = %i[first second third fourth].freeze
+  START_DATE = { first: 1, second: 8, third: 15, fourth: 22,
+  teenth: 13, last: -7 }
 
   def initialize(month, year)
     @month = month
     @year = year
   end
 
-  def day(weekday, schedule)
-    possible_dates = get_all_xdays(weekday)
-    select_from_possible_dates(possible_dates, schedule)
-  end
+  def day(day_of_week, schedule)
+    meeting_date = Date.new(@year, @month, START_DATE[schedule])
 
-  private
-
-  def get_first_xday(weekday)
-    test_day = (weekday.to_s + '?')
-    dates = Date.new(@year, @month)..Date.new(@year, @month, 7)
-    dates.find { |date| date.public_send(test_day) }
-  end
-
-  def get_all_xdays(weekday)
-    meeting_day = get_first_xday(weekday)
-
-    possible_dates = []
     loop do
-      possible_dates << meeting_day
-      meeting_day += 7
-      break if meeting_day.month != @month
+      break if meeting_date.public_send("#{day_of_week}?")
+      
+      meeting_date += 1
     end
-    possible_dates
-  end
-
-  def select_from_possible_dates(possible_dates, schedule)
-    case schedule
-    when :last then possible_dates[-1]
-    when :teenth then determine_teenth(possible_dates)
-    else possible_dates[ORDER.index(schedule)]
-    end
-  end
-
-  def determine_teenth(possible_dates)
-    possible_dates.find { |choice| (13..19).cover?(choice.day) }
+    meeting_date
   end
 end
