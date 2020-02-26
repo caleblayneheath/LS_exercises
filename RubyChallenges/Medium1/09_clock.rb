@@ -1,7 +1,7 @@
 class Clock
-
+  include Comparable
   attr_reader :time
-  
+
   def initialize(minutes)
     @time = parse_minutes(minutes)
   end
@@ -24,13 +24,15 @@ class Clock
 
   def +(minutes)
     @time = parse_minutes(time + minutes)
+    self
   end
 
   def -(minutes)
     @time = parse_minutes(time - minutes)
+    self
   end
 
-  def <=>(other_clock)
-    time <=> other_clock.time
+  def <=>(other)
+    time <=> other.time
   end
 end
