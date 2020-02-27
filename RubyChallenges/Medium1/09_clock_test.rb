@@ -49,4 +49,9 @@ class ClockTest < Minitest::Test
     clock = Clock.at(0, 30) - 60
     assert_equal '23:30', clock.to_s
   end
+
+  def test_midnight
+    clock = Clock.at(0, 0)
+    assert_equal '00:00', clock.to_s
+  end
 end

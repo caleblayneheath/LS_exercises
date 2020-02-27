@@ -2,17 +2,20 @@ class Clock
   include Comparable
   attr_reader :time
 
+  HOURS_IN_DAY = 24
+  MINUTES_IN_HOUR = 60
+
   def initialize(minutes)
     @time = parse_minutes(minutes)
   end
 
   def parse_minutes(minutes)
-    minutes % 1440
+    minutes % (HOURS_IN_DAY * MINUTES_IN_HOUR)
   end
 
   # this should return a new clock instance
   def self.at(hour, minutes = 0)
-    Clock.new((hour * 60) + minutes)
+    new((hour * MINUTES_IN_HOUR) + minutes)
   end
 
   # turns integer of minutes to HH:MM 24 string
