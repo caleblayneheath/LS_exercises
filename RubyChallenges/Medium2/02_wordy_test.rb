@@ -81,4 +81,10 @@ class WordProblemTest < Minitest::Test
     question = 'What is 3 plus by 2 multiplied by 3?'
     assert_equal 15, WordProblem.new(question).answer
   end
+
+  def test_one_number_missing
+    assert_raises ArgumentError do
+      WordProblem.new('What is 53 divided by?').answer
+    end
+  end
 end
