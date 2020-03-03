@@ -48,6 +48,11 @@ class CryptoTest < Minitest::Test
     assert_equal %w(zomg zomb ies), crypto.plaintext_segments
   end
 
+  def test_yet_more_plaintext_segments
+    crypto = Crypto.new('Madness, and then illumination.')
+    assert_equal %w(madnes sandth enillu minati on), crypto.plaintext_segments
+  end
+
   def test_ciphertext
     crypto = Crypto.new('Time is an illusion. Lunchtime doubly so.')
     assert_equal 'tasneyinicdsmiohooelntuillibsuuml', crypto.ciphertext
@@ -64,14 +69,12 @@ class CryptoTest < Minitest::Test
   end
 
   def test_normalized_ciphertext_spills_into_short_segment
-    skip
     crypto = Crypto.new('Madness, and then illumination.')
     expected = 'msemo aanin dnin ndla etlt shui'
     assert_equal expected, crypto.normalize_ciphertext
   end
 
   def test_another_normalized_ciphertext
-    skip
     crypto = Crypto.new(
       'If man was meant to stay on the ground god would have given us roots',
     )
@@ -80,14 +83,12 @@ class CryptoTest < Minitest::Test
   end
 
   def test_normalized_ciphertext_with_punctuation
-    skip
     crypto = Crypto.new('Have a nice day. Feed the dog & chill out!')
     expected = 'hifei acedl veeol eddgo aatcu nyhht'
     assert_equal expected, crypto.normalize_ciphertext
   end
 
   def test_normalized_ciphertext_when_just_less_then_a_full_square
-    skip
     crypto = Crypto.new('I am')
     assert_equal 'im a', crypto.normalize_ciphertext
   end
