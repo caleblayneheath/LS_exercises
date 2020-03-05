@@ -4,7 +4,7 @@ class Robot
 
   def initialize
     reset
-  end
+  end  
 
   def reset
     @@used_names.delete(name) if name
@@ -18,24 +18,24 @@ class Robot
   def self.used_names
     @@used_names  
   end
-  
+
   private
-  
+
   def name_used?
     self.class.used_names.include?(name)
   end
-  
+
   def generate_name
     str = ''
     2.times { str << random_letter }
     3.times { str << random_digit }
     str
   end
-  
+
   def random_letter
     ('A'..'Z').to_a.sample
   end
-  
+
   def random_digit
     ('0'..'9').to_a.sample
   end

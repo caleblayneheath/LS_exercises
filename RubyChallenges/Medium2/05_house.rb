@@ -1,5 +1,5 @@
 class House
-  FIRST_WORDS = "This is "
+  FIRST_WORDS = 'This is '.freeze
 
   def self.recite
     new.recite

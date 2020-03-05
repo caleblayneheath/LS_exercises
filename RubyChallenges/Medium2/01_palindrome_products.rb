@@ -17,7 +17,7 @@ class Palindromes
     @palindromes = Hash.new { |hash, key| hash[key] = [] }
   end
 
-  def is_palindromic?(number)
+  def palindromic?(number)
     number.to_s == number.to_s.reverse
   end
 
@@ -27,7 +27,7 @@ class Palindromes
     # this is actually faster than repeated_combination
     # (@min_factor..@max_factor).each do |min|
     #   (min..@max_factor).each do |max|
-    #     pairs << [min, max] if is_palindromic?(min * max)
+    #     pairs << [min, max] if palindromic?(min * max)
     #   end
     # end
     # @palindrome_pairs = pairs.sort_by! do |num1, num2|
@@ -36,7 +36,7 @@ class Palindromes
 
     (@min_factor..@max_factor).each do |min|
       (min..@max_factor).each do |max|
-        @palindromes[max * min] << [min, max] if is_palindromic?(min * max)
+        @palindromes[max * min] << [min, max] if palindromic?(min * max)
       end
     end
   end

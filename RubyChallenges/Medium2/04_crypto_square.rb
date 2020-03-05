@@ -1,9 +1,9 @@
 class Crypto
   attr_reader :string, :size
-  
+
   def initialize(string)
     @string = string
-    @normalized_plaintext = string.downcase.gsub( /[^a-z0-9]/,'')
+    @normalized_plaintext = string.downcase.gsub(/[^a-z0-9]/, '')
     @size = Math.sqrt(normalize_plaintext.size).ceil
   end
 
@@ -14,14 +14,12 @@ class Crypto
   def plaintext_segments
     text = normalize_plaintext
     segments = []
-    until text.empty?
-      segments << text.slice!(0, size)
-    end
+    segments << text.slice!(0, size) until text.empty?
     segments
   end
 
   def ciphertext
-    normalize_ciphertext.gsub(' ', '')
+    normalize_ciphertext.delete(' ')
   end
 
   def normalize_ciphertext
