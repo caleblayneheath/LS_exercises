@@ -14,7 +14,7 @@ set left and right accordingly
 
 =end
 
-class Bst
+class Bst1
   Node = Struct.new(:data, :left, :right)
 
   def initialize(data)
@@ -106,5 +106,30 @@ class Bst
     else
       [node]
     end
+  end
+end
+
+# best solution from Launchschool
+class Bst2
+  attr_reader :data, :left, :right
+  
+  def initialize(data)
+    @data = data
+  end
+
+  def insert(value)
+    if value > data
+      right.nil? ? @right = Bst.new(value) : right.insert(value)
+    else
+      left.nil? ? @left = Bst.new(value) : left.insert(value)
+    end
+  end
+
+  def each
+    return to_enum unless block_given?
+
+    left.each(&Proc.new) unless left.nil?
+    yield(data)
+    right.each(&Proc.new) unless right.nil?
   end
 end
