@@ -6,7 +6,7 @@ used for push-down LIFO stacks (last in is first out)
 
 class Element
   attr_accessor :datum, :next
-  
+
   def initialize(datum, next_element = nil)
     @datum = datum
     @next = next_element
@@ -16,9 +16,9 @@ class Element
   def tail?
     @next.nil?
   end
- end
+end
 
- class SimpleLinkedList
+class SimpleLinkedList
   attr_reader :size, :head
 
   def initialize
@@ -28,7 +28,7 @@ class Element
 
   def pop
     result = @head&.datum
-    (@size - 1 < 0) ? @size = 0 : @size -= 1
+    (@size - 1).negative? ? @size = 0 : @size -= 1
     @head = @head&.next
     result
   end
@@ -63,6 +63,6 @@ class Element
   end
 
   def reverse
-    SimpleLinkedList.from_a(self.to_a.reverse)
+    SimpleLinkedList.from_a(to_a.reverse)
   end
- end
+end
