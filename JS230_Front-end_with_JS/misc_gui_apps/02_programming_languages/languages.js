@@ -36,24 +36,16 @@ const languages = [
   }
 ];
 
+let article_template = Handlebars.compile(document.querySelector('#article_template').innerHTML);
+let article_list_template = Handlebars.compile(document.querySelector('#article_list_template').innerHTML);
+Handlebars.registerHelper('isLong', string => string.length > 120);
+Handlebars.registerHelper('shortenDescription', string => string.slice(0, 120));
+Handlebars.registerPartial('articleTemplate', document.querySelector('#article_template').innerHTML);
+
 document.addEventListener('DOMContentLoaded', () => {
   let main = document.querySelector('main');
   
-  languages.forEach(language => {
-    let article = document.createElement('article');
-    article.dataset.name = language.name;
-    article.insertAdjacentHTML('beforeend', `<h2>${language.name}</h2>`);
-    
-    let shortDescription = language.description.slice(0, 120);
-    article.insertAdjacentHTML('beforeend', `<p>${shortDescription}</p>`)
-    
-    if (!(shortDescription === language.description)) {
-      article.querySelector('p').textContent = shortDescription + ' ...';
-      article.insertAdjacentHTML('beforeend', `<button data-type='more'>Show More</button>`);
-    }
-
-    main.appendChild(article);
-  });
+  main.insertAdjacentHTML('afterbegin', article_list_template({articles: languages}));
 
   main.addEventListener('mouseup', event => {
     if (event.target.tagName !== 'BUTTON') {
@@ -65,16 +57,16 @@ document.addEventListener('DOMContentLoaded', () => {
     let button = article.querySelector('button');
     let language = languages.filter(({name}) => name === article.dataset.name)[0];
 
-    let buttonType = event.target.dataset.type;
+    let buttonType = button.dataset.type;
     
     if (buttonType === 'more') {
       paragraph.textContent = language.description;
-      button.textContent = "Show Less";
-      event.target.dataset.type = 'less';
+      button.textContent = 'Show Less';
+      button.setAttribute('data-type', 'less');
     } else if (buttonType === 'less') {
       paragraph.textContent = language.description.slice(0, 120) + ' ...';
-      button.textContent = "Show More";
-      event.target.dataset.type = 'more';
+      button.textContent = 'Show More';
+      button.setAttribute('data-type', 'more');
     }
   });
 });
