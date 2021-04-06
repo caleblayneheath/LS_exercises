@@ -9,32 +9,10 @@
 <body>
 <header>
   <h1>Buy Used Cars</h1>
-  <form id="filters">
-    <label>
-      Make 
-      <select id="make" name="make">
-        <option value="">All</option>
-      </select>
-    </label>
-    <label>
-      Model 
-      <select id="model" name="model">
-        <option value="">All</option>
-      </select>
-    </label>
-    <label>
-      Price
-      <select id="price" name="price">
-        <option value="">Any</option>
-      </select>
-    </label>
-    <label>
-      Year
-      <select id="year" name="year">
-        <option value="">Any</option>
-      </select>
-    </label>
+  <form id="search">
+    <div id="filters"></div>
     <input type='submit' value="Filter"></input>
+    <input type='reset'></input>
   </form>
 </header>
 <main>
@@ -42,8 +20,34 @@
   </ul>
 </main>
 </body>
+<script id="filters_template" type="text/x-handlebars">
+  <label>
+    Make 
+    <select id="make" name="make">
+      <option value="">All</option>
+    </select>
+  </label>
+  <label>
+    Model 
+    <select id="model" name="model">
+      <option value="">All</option>
+    </select>
+  </label>
+  <label>
+    Price
+    <select id="price" name="price">
+      <option value="">Any</option>
+    </select>
+  </label>
+  <label>
+    Year
+    <select id="year" name="year">
+      <option value="">Any</option>
+    </select>
+  </label>
+</script>
 <script id="car_template" type="text/x-handlebars">
-  <li data-make="{{make}}" data-model="{{model}}" data-year="{{year}}" data-price="{{price}}" class="match">
+  <li data-make="{{make}}" data-model="{{model}}" data-year="{{year}}" data-price="{{price}}">
       <img src="{{image}}" />
       <figcaption>{{make}} {{model}}</figcaption>
     </figure>

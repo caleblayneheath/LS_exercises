@@ -10,12 +10,12 @@ header {
   padding: 10px;
 }
 
-#filters {
+#search {
   display: flex;
   flex-wrap: wrap;
 }
 
-#filters select, input {
+#search select, input {
   border: 1px solid white;
   border-radius: 5px;
   background-color: darkgreen;
@@ -25,7 +25,7 @@ header {
   min-width: 50px;
 }
 
-#filters input {
+#search input {
   height: 29px;
   margin-left: 20px;
 }
@@ -39,12 +39,7 @@ header {
 }
 
 #listings li {
-  display: none;
   margin: 10px;
-}
-
-#listings li.match {
-  display: block;
 }
 
 #listings figure {
