@@ -10,9 +10,6 @@ body {
 }
 
 #stopwatch p {
-/*   font-family: 'Roboto Mono', monospace; */
-/*   font-family: sans-serif;
-  font-variant-numeric: tabular-nums; */
   font-family: monospace;
   font-size: 5rem;
   font-weight: bold;
