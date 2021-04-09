@@ -1,0 +1,21 @@
+label {
+  display: block;
+  padding: 5px;
+}
+
+label input {
+  height: 15px;
+}
+
+.invalid {
+  border: 1px solid red;
+}
+
+.error {
+  color: red;
+  margin-left: 10px;
+}
+
+form > input {
+  margin-left: 20px;
+}
