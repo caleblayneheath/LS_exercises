@@ -3,8 +3,18 @@ label {
   padding: 5px;
 }
 
-label input {
+#fields input {
   height: 15px;
+}
+
+fieldset {
+  border: 0;
+  margin-top: 10px;
+  padding: 0;
+}
+
+fieldset input {
+  width: 40px;
 }
 
 .invalid {
@@ -17,5 +27,5 @@ label input {
 }
 
 form > input {
-  margin-left: 20px;
+  margin-top: 20px;
 }

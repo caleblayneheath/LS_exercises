@@ -9,27 +9,24 @@
   <h1>Sign Up</h1>
   <form novalidate>
     <div id="fields">
-      <label>
-        First Name:
-        <input type="" name="firstName" pattern=".*\w.*" required></input>
-      </label>
-      <label>
-        Last Name:
-        <input type="" name="lastName" pattern=".*\w.*" required></input>
-      </label>
-      <label>
-        Email: 
-        <input type="" name="email" pattern=".+@.+" required></input>
-      </label>
-      <label>
-        Password:
-        <input type="password" name="password" minlength="10" required></input>
-      </label>
-      <label>
-        Phone:
-        <input type="tel" name="phone" placeholder="xxx-xxx-xxxx" pattern="\d{3}-\d{3}-\d{4}"></input>
-      </label>
+      <label for="first-name">First Name:</label>
+      <input type="" id="first-name" name="first-name" required></input>
+      <label for="last-name">Last Name:</label>
+      <input type="" id="last-name" name="last-name" required></input>
+      <label for="email">Email: </label>
+      <input type="" id="email" name="email" pattern=".+@.+" required></input>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" minlength="10" required></input>
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" placeholder="xxx-xxx-xxxx" pattern="\d{3}-\d{3}-\d{4}"></input>
     </div>
+    <fieldset id="credit-card">
+      <legend>Credit Card:</legend>
+      <input name="credit-card" maxlength="4"></input> -
+      <input name="credit-card" maxlength="4"></input> -
+      <input name="credit-card" maxlength="4"></input> -
+      <input name="credit-card" maxlength="4"></input>
+    </fieldset>
     <input type="submit" value="Sign Up"></input>
   </form
 </body>
